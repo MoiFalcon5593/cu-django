@@ -1,10 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Detail empleado</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    {{ object.full_name }}
+{% endblock title %}
+
+{% block content %}
+{% include 'includes/header.html' %}
+
+<div class="grid-container">
+    <div class="grid-x grid-margin-x align-center">
+        <div class="cell large-4 card" style="width: 300px;">
+            <div class="card-divider">
+                {{ empleado.job }}
+            </div>
+            {% if %}
+                <img src="{{ empleado.avatar.url }}">
+            {% else %}
+                <img src="{% static 'img/hack.jpg' %}">
+            {% endif %}
+
+            <div class="card-section">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
     <h1>Detalle empleado    {{titulo}}</h1>
     {{empleado}}
     <h3>Todos los datos:</h3>
@@ -12,5 +36,3 @@
     <p>{{empleado.last_name}}</p>
     <p>{{empleado.departamento}}</p>
     <p>{{empleado.habilidades}}</p>
-</body>
-</html>

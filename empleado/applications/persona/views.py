@@ -9,6 +9,7 @@ from django.views.generic import (
     DeleteView
 )
 # models
+from .admin import EmpleadoAdmin
 from .models import Empleado
 # Create your views here.
 
@@ -20,6 +21,7 @@ class ListAllEmpleados(ListView):
     template_name = 'persona/list_all.html'
     paginate_by = 4
     ordering = 'first_name'
+    context_object_name = 'empleados'
 
     def get_queryset(self):
         palabra_clave =self.request.GET.get("kword", '')
@@ -28,9 +30,17 @@ class ListAllEmpleados(ListView):
         )
         return lista
 
+class ListaEmpleadosAdmin(ListView):
+    template_name = 'persona/lista_empleados.html'
+    paginate_by = 8
+    ordering = 'first_name'
+    context_object_name = 'empleados'
+    model = Empleado
+
 class ListByAreaEmpleado(ListView):
     """ lista empleado de un area  """
     template_name = 'persona/list_by_area.html'
+    context_object_name = 'empleados'
 
     def get_queryset(self):
         area = self.kwargs['shorname']
@@ -38,6 +48,7 @@ class ListByAreaEmpleado(ListView):
             departamento__shor_name = area
         )
         return lista
+
 class ListEmpleadoByKword(ListView):
     """ Lista de empleado por palabra clave """
     template_name = 'persona/by_kword.html'
@@ -78,9 +89,9 @@ class SuccessView(TemplateView):
 class EmpleadoCreateView(CreateView):
     template_name = 'persona/add.html'
     model = Empleado
-    fields = ['first_name','last_name','job','departamento','habilidades',]
+    fields = ['first_name','last_name','job','departamento','habilidades','avatar']
     #fields = ('__all__')
-    success_url = reverse_lazy('persona_app:correcto')
+    success_url = reverse_lazy('persona_app:empleados_admin')
 
     def form_valid(self, form):
         #logica del codigo
@@ -94,7 +105,7 @@ class EmpleadoUpdateView(UpdateView):
     template_name = 'persona/update.html'
     model = Empleado
     fields = ['first_name', 'last_name', 'job', 'departamento', 'habilidades', ]
-    success_url = reverse_lazy('persona_app:correcto')
+    success_url = reverse_lazy('persona_app:empleados-admin')
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -113,4 +124,4 @@ class EmpleadoUpdateView(UpdateView):
 class EmpleadoDeleteView(DeleteView):
     model = Empleado
     template_name = 'persona/delete.html'
-    success_url = reverse_lazy('persona_app:correcto')
+    success_url = reverse_lazy('persona_app:empleados_admin')

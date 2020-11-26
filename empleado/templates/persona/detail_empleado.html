@@ -11,28 +11,31 @@
 
 <div class="grid-container">
     <div class="grid-x grid-margin-x align-center">
-        <div class="cell large-4 card" style="width: 300px;">
+        <div class="cell large-4 card" style="width: 300px;margin-top: 10px">
             <div class="card-divider">
-                {{ empleado.job }}
+                {{ empleado.get_job_display }}
             </div>
-            {% if %}
+            {% if empleado.avatar %}
                 <img src="{{ empleado.avatar.url }}">
             {% else %}
                 <img src="{% static 'img/hack.jpg' %}">
             {% endif %}
 
             <div class="card-section">
-
+                <H4>{{empleado.full_name}}</H4>
+                <p>{{empleado.last_name}}</p>
+                <p>{{empleado.departamento.shor_name}}</p>
+                <p><spam class="label">Habilidades:</spam></p>
+                <ul class="vertical menu">
+                    {% for h in empleado.habilidades.all %}
+                        {{ h.habilidad }}
+                    {% endfor %}
+                </ul>
+                <p>{{empleado.habilidadesx}}</p>
             </div>
         </div>
     </div>
 </div>
 
 {% endblock content %}
-    <h1>Detalle empleado    {{titulo}}</h1>
-    {{empleado}}
-    <h3>Todos los datos:</h3>
-    <p>{{empleado.first_name}}</p>
-    <p>{{empleado.last_name}}</p>
-    <p>{{empleado.departamento}}</p>
-    <p>{{empleado.habilidades}}</p>
+

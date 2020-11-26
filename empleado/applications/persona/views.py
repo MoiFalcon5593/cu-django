@@ -11,6 +11,9 @@ from django.views.generic import (
 # models
 from .admin import EmpleadoAdmin
 from .models import Empleado
+# forms
+from .forms import EmpleadoForm
+
 # Create your views here.
 
 class InicioView(TemplateView):
@@ -89,7 +92,7 @@ class SuccessView(TemplateView):
 class EmpleadoCreateView(CreateView):
     template_name = 'persona/add.html'
     model = Empleado
-    fields = ['first_name','last_name','job','departamento','habilidades','avatar']
+    form_class = EmpleadoForm
     #fields = ('__all__')
     success_url = reverse_lazy('persona_app:empleados_admin')
 
